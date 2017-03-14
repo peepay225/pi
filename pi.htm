@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Pi</title>
+  <script type="text/javascript">
+  function calculategcd(x, y) {
+  	while (y != 0) {
+  		var z = x % y;
+  		x = y;
+  		y = z;
+  	}
+  	return x;
+  }
+  
+  function count(){
+    var countpairs=document.getElementById("countpairs").value;
+    var randrange=document.getElementById("randrange").value;
+    var a=[];
+    var b=[];
+    var gdc=[];
+    var isgdcone=[];
+    var sum=0;
+    for (var i=0; i<countpairs; i++){
+      a[i]=Math.ceil(Math.random()*randrange);
+      b[i]=Math.ceil(Math.random()*randrange);
+      gdc[i]=calculategcd(a[i],b[i]);
+      if (gdc[i]==1) {isgdcone[i]=1} else {isgdcone[i]=0}
+      sum+=isgdcone[i];
+    }
+    var ratio=sum/countpairs;
+    var pi=Math.sqrt(6/ratio);
+    return(pi);      
+  }
+  
+  function run(){
+    document.getElementById("cycle").innerHTML="Cycle:<br>";
+    document.getElementById("results").innerHTML="Generated pi:<br>";
+    document.getElementById("averages").innerHTML="Rolling average:<br>";
+    var results=[];
+    var averages=[];
+    var currentsum=0;
+    for (var j=0; j<document.getElementById("times").value; j++){
+      document.getElementById("cycle").innerHTML+=j+1+"<br>";
+      results[j]=count();
+      currentsum+=results[j];
+      document.getElementById("results").innerHTML+=results[j]+"<br>";
+      averages[j]=currentsum/(averages.length+1);
+      document.getElementById("averages").innerHTML+=averages[j]+"<br>";
+    }
+  }
+  </script>
+  
+  <style type="text/css">
+  body{
+  font-family: arial;
+  }
+  div {
+  margin-left: 20px;
+  margin-top: 20px;
+  }
+  div#selection {
+  line-height: 1.75;
+  }
+  div#cycle {
+  width: 75px;
+  float: left;
+  }
+  div#results {
+  width: 250px;
+  float: left;
+  }
+  div#averages {
+  margin-left: 365px;
+  }
+  #warning {
+  color: gray;  
+  }
+  </style>
+  
+  </head>
+  
+  <body>
+    <div id="selection">
+      Number of pairs: <select id="countpairs">
+        <option value="10">10</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="500">500</option>
+        <option value="1000">1 000</option>
+        <option value="5000">5 000</option>
+        <option value="10000">10 000</option>
+        <option value="50000">50 000</option>
+        <option value="100000" selected>100 000</option>
+        <option value="500000">500 000</option>
+        <option value="1000000">1 000 000</option>
+      </select><br>
+    
+      Numbers up to: <select id="randrange">
+        <option value="100">100</option>
+        <option value="500">500</option>
+        <option value="1000">1 000</option>
+        <option value="5000">5 000</option>
+        <option value="10000">10 000</option>
+        <option value="50000">50 000</option>
+        <option value="100000">100 000</option>
+        <option value="500000">500 000</option>
+        <option value="1000000">1 000 000</option>
+        <option value="5000000">5 000 000</option>
+        <option value="10000000" selected>10 000 000</option>
+        <option value="50000000">50 000 000</option>
+        <option value="100000000">100 000 000</option>
+      </select><br>
+    
+      Number of computation cycles: <select id="times">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50" selected>50</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="500">500</option>
+        <option value="1000">1 000</option>
+      </select><br>
+    
+      <span id="warning">Warning: Combinations of high values may freeze your browser.</span><br>
+      <input type="button" value="Calculate" onclick="run()">
+    </div>
+    
+    <div id="cycle">Cycle:<br></div>
+    <div id="results">Generated pi:<br></div>
+    <div id="averages">Rolling average:<br></div>
+
+  </body>
+</html>
